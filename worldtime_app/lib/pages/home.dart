@@ -12,26 +12,32 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
-    print(data['time']);
+
     return Scaffold(
       backgroundColor: Colors.indigo,
       appBar: AppBar(
         title: Text('Home'),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          FlatButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.edit_location),
-              label: Text('Choose your location')),
-          Text(
-            'hi',
-            style: TextStyle(
-              fontSize: 40.0,
-            ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 40.0),
+        child: Center(
+          child: Column(
+            children: [
+              FlatButton.icon(
+                  onPressed: () {},
+                  icon: Icon(Icons.edit_location),
+                  label: Text('Choose your location')),
+              Text(
+                data['/time'],
+                style: TextStyle(
+                  fontSize: 40.0,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
