@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class WorldtimeApi {
   String url;
@@ -11,8 +12,8 @@ class WorldtimeApi {
 
   Future<void> mainData() async {
     try {
-      var url = Uri.parse('http://worldtimeapi.org/api/timezone/Africa/Lagos');
-      http.Response response = await http.get(url);
+      var urls = Uri.parse('http://worldtimeapi.org/api/timezone/$url');
+      http.Response response = await http.get(urls);
       dynamic data = jsonDecode(response.body);
 
       String datetime = data['datetime'];
@@ -21,7 +22,9 @@ class WorldtimeApi {
 
       DateTime now = DateTime.parse(datetime);
       now = now.add(Duration(hours: int.parse(newOffset)));
-      print(now);
-    } catch (e) {}
+      time = DateFormat.jm().format(now);
+    } catch (e) {
+      print(e);
+    }
   }
 }

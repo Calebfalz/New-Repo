@@ -1,8 +1,9 @@
 import 'dart:convert';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:worldtime_app/services/worldtime_api.dart';
 
 class Loading extends StatefulWidget {
   Loading({Key key}) : super(key: key);
@@ -13,17 +14,16 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void getData() async {
-    var url = Uri.parse('http://worldtimeapi.org/api/timezone/Africa/Lagos');
-    http.Response response = await http.get(url);
-    dynamic data = jsonDecode(response.body);
-
-    String datetime = data['datetime'];
-    String offset = data['utc_offset'];
-    String newOffset = offset.substring(1, 3);
-
-    DateTime now = DateTime.parse(datetime);
-    now = now.add(Duration(hours: int.parse(newOffset)));
-    print(now);
+    WorldtimeApi api = WorldtimeApi(url: 'America/Chicago', location: 'London');
+    await api.mainData();
+    setState(() {
+      Navigator.pushReplacementNamed(context, '/home', arguments: {
+        '/url': api.url,
+        '/location': api.location,
+        '/flag': api.flag,
+        '/time': api.time
+      });
+    });
   }
 
   @override
@@ -37,19 +37,11 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Column(
-        children: [
-          Text('Loading'),
-          FlatButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/home');
-            },
-            child: Text('Click'),
-            color: Colors.red[900],
-          )
-        ],
+      backgroundColor: Colors.indigo,
+      body: SpinKitSquareCircle(
+        color: Colors.white,
+        size: 55.0,
       ),
-    ));
+    );
   }
 }
