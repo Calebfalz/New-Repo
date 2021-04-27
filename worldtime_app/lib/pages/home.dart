@@ -20,18 +20,20 @@ class _HomeState extends State<Home> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 40.0),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 90.0),
         child: Center(
           child: Column(
             children: [
               FlatButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/locations');
+                  },
                   icon: Icon(Icons.edit_location),
                   label: Text('Choose your location')),
               Text(
                 data['/time'],
                 style: TextStyle(
-                  fontSize: 40.0,
+                  fontSize: 50.0,
                   color: Colors.white,
                 ),
               ),

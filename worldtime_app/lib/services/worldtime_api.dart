@@ -25,6 +25,7 @@ class WorldtimeApi {
       time = DateFormat.jm().format(now);
     } catch (e) {
       print(e);
+      time = 'Opps...Time Data Not Found';
     }
   }
 }
